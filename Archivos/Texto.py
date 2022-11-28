@@ -63,3 +63,20 @@ def Cierre():
     sleep(2)
     typingPrint("Desarrolladores:\n\nPellegrini Mateo\nPodesta Felipe\nPellegrini Ulises")
     sleep(2)
+
+def GuiaDeInicio():
+    typingPrint("GUIA para comprender los aspectos básicos sobre el juego:\n")
+    print("")
+    typingPrint("Mazmorra: Lugar donde el jugador se enfrentara a enemigos y donde se completa el juego.\n\n")
+    typingPrint("Herreria: Lugar donde el jugador puede mejorar su arma y armadura para aumentas sus estadisticas.\n\n")
+    typingPrint("Iglesia: Lugar donde el jugador podra curarse a coste de una 'donacion'.\n\n")
+    typingPrint("Zonas de caza y mineria: Lugares donde el jugador podra comseguir oro a cambio de tiempo de juego.\n\n")
+    typingPrint("Estadisticas: El jugador podra consultar sus estadisticas actuales.\n\n")
+    print("\n\n\n\n")
+    typingPrint("El objetivo principal del Jugador es poder superar el ultimo nivel de la Mazmorra, enfrentandose al Jefe.\n")
+
+def GuiaDentroJuego():
+    print("Mazmorra: El Jugador se enfrentara a enemigos y llegar al ultimo nivel para derrotar al Jefe para completar el Juego.")
+    print("Herreria: Lugar donde se puede mejorar el arma y armadura del Jugador para poder mejorar las estadisticas.")
+    print("Iglesia: El Jugador se podra curar toda la vida, donando $20.")
+    print("Zonas de caza y mineria: El Jugador puede gastar tiempo a cambio de conseguir recursos que vendera para conseguir oro.")

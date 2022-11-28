@@ -60,6 +60,11 @@ class Personaje:
         typingPrint(f"Armadura: {self.armaduraNombre} +{self.armaduraNivel} armadura: {self.defensa}\n")
         typingPrint(f"Vida Maxima: {self.vidaMax}\n")
 
+        #AVISA DE QUE EL JUGADOR TIENE VIDA BAJA
+    def AvisoVidaBaja(self):
+        if self.vida <= 30:
+            print(f"Tienes vida baja!, te recomendamos regresar a la iglesia.")
+
         #CURARSE
     def Curarse(self):
         print("Te Curas")
@@ -234,13 +239,15 @@ def Crear():
 #Jugador =  Crear()
 
 #PERSONAJE DE TESTEO YA ESTABLECIDO (Se activa a la hora del testeo)
-#Jugador = Guerrero("Mateo")
+#Jugador = Guerrero("Nombre")
 
 #jUEGO EN GENERAL
 class Juego:
     def __init__(self):
         self.matados = 0
         self.nivel = 1
+        self.precioArmaMejora = 150
+        self.precioArmaduraMejora = 150
 
     #POBLADO
     def Poblado(self):
@@ -256,7 +263,8 @@ class Juego:
             print ("4     Zona de caza")
             print ("5     Zona de minas")
             print ("6     Estadisticas")
-            print ("7     Salir del Juego")
+            print ("7     Guia")
+            print ("8     Salir del Juego")
             print("")
 
 
@@ -294,8 +302,13 @@ class Juego:
                 sleep(1)
                 LimpiarPantalla()
             elif case == "7":
-                typingPrint("Saliendo del juego")
-                Puntos()
+                typingPrint("Guia...\n")
+                sleep(1)
+                GuiaDentroJuego()
+                sleep(5)
+                LimpiarPantalla()
+            elif case == "8":
+                typingPrint("Saliendo del juego\n")
                 sleep(1.5)
                 Cierre()
                 llave = 1
@@ -341,6 +354,7 @@ class Juego:
                     self.nivel = 2
             #NIVEL 2
             while self.nivel == 2 and llave !=1:
+                Jugador.AvisoVidaBaja()
                 case = input("Atacar o no? s o n: ")
                 if case == 's':
                     prob = random.randint(0,10)
@@ -372,6 +386,7 @@ class Juego:
                     self.nivel = 3
             #NIVEL 3
             while self.nivel == 3 and llave !=1:
+                Jugador.AvisoVidaBaja()
                 case = input("Atacar o no? s o n: ")
                 if case == 's':
                     prob = random.randint(0,10)
@@ -406,7 +421,7 @@ class Juego:
                     self.nivel = 4            
             #NIVEL 4
             while self.nivel == 4 and llave !=1:
-                print("NIVEL 4")
+                Jugador.AvisoVidaBaja()
                 llave = 0
                 while llave != 1:
                     case = typingInput("Quieres enfrentarte al Jefe Final o regresar? s o n: ")
@@ -430,15 +445,13 @@ class Juego:
     def Herreria(self):
         LimpiarPantalla()
         llave = 0
-        self.precioArmaMejora = 150
-        self.precioArmaduraMejora = 150
         while llave != 1:
             print(herreria) #TEXTO QUE APARECE ARRIBA
             print(f"Balance actual: {Jugador.monedero}")
             print(f"1)   Mejorar arma, costo: {self.precioArmaMejora}")
             print(f"2)   Mejorar armadura, costo: {self.precioArmaduraMejora}")
             print(f"3)   Salir,(regresar al poblado)")
-            case = input("Que quiere hacer? (Ingrese numero) ")
+            case = input("Que quiere hacer? (Ingrese numero) \n")
             if case == '1':
                 sleep(1)
                 if Jugador.armaNivel < 5:
@@ -456,6 +469,7 @@ class Juego:
                         LimpiarPantalla()
                 else:
                     print("Tienes el nivel maximo posible del arma")
+                    self.precioArmaMejora = "MAX"
                     sleep(2)
                     LimpiarPantalla()
             elif case == '2':
@@ -473,7 +487,8 @@ class Juego:
                         sleep(2)
                         LimpiarPantalla()
                 else:
-                    print("Tienes el nivel maximo posible del arma")
+                    print("Tienes el nivel maximo posible del la armadura")
+                    self.precioArmaduraMejora = "MAX"
                     sleep(2)
                     LimpiarPantalla()
             elif case == '3':
@@ -500,7 +515,7 @@ class Juego:
             if case == "1":
                 if Jugador.vida != Jugador.vidaMax:
                     if Jugador.monedero > 20:
-                        typingPrint("Has donado $20 pero te han curado\n")
+                        typingPrint("Has donado $20 pero te los sacerdontes te han curado\n")
                         Jugador.monedero = Jugador.monedero - 20
                         sleep(2)
                         falta = Jugador.vidaMax - Jugador.vida
@@ -510,8 +525,10 @@ class Juego:
                         sleep(3)
                     else:
                         typingPrint("No te puedes permitir donar $20\n")
+                        sleep(3)
                 else:
                     typingPrint("Tienes la vida completa\n")
+                    sleep(3)
             elif case == "2":
                 typingPrint("Saliendo")
                 Puntos()
@@ -520,6 +537,7 @@ class Juego:
                 llave = 1
             else:
                 typingPrint("Error!, caracter invalido\n")
+
     #IGLESIA CUANDO EL PERSONAJE MUERE (solo se invoca cuando el personaje muere)
     def IglesiaMuerte(self):
         Jugador.vida = Jugador.vidaMax
@@ -668,5 +686,8 @@ Inicializacion()
 Jugador = Crear()
 InicioDeJuego(Jugador.nombre,Jugador.clase)
 sleep(2)
+LimpiarPantalla()
+GuiaDeInicio()
+sleep(3)
 Game = Juego()
 Game.Poblado()
